@@ -1,0 +1,67 @@
+name: Autograding Tests
+'on':
+  - push
+  - workflow_dispatch
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    - name: Test MessageService Manana
+      id: test1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test MessageService Manana
+        setup-command: ''
+        command: mvn test -Dtest="MessageServiceTest#testGetMessageManana"
+        timeout: 2
+        max-score: 10
+    - name: Test MessageService Tarde
+      id: test2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test MessageService Tarde
+        setup-command: ''
+        command: mvn test -Dtest="MessageServiceTest#testGetMessageTarde"
+        timeout: 2
+        max-score: 10
+    - name: Test MessageService Noche
+      id: test3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test MessageService Noche
+        setup-command: ''
+        command: mvn test -Dtest="MessageServiceTest#testGetMessageNoche"
+        timeout: 2
+        max-score: 10
+    - name: Test MessageService Limites
+      id: test4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test MessageService Limites
+        setup-command: ''
+        command: mvn test -Dtest="MessageServiceTest"
+        timeout: 2
+        max-score: 70
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST1_RESULTS: "${{steps.test1.outputs.result}}"
+        TEST2_RESULTS: "${{steps.test2.outputs.result}}"
+        TEST3_RESULTS: "${{steps.test3.outputs.result}}"
+        TEST4_RESULTS: "${{steps.test4.outputs.result}}"
+      with:
+        runners: test1,test2,test3,test4
+
