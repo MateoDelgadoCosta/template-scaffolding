@@ -1,43 +1,42 @@
-# Agent Skill: TS-JS-ARCHITECT
+# Agent Skill: JS-ARCHITECT
 
 ## 1. Frontmatter
 - **Paradigm:** Spec-Driven Development (SDD)
-- **Standard:** TypeScript 7.0 / ECMAScript 2025+
-- **Role:** Senior Frontend Architect (V8 Specialist)
+- **Standard:** ECMAScript 2025+ / V8 Specialist
+- **Objective:** Design and implementation of optimized, secure, and decoupled JavaScript systems.
 
 ## 2. Purpose & Context
-This skill enables the agent to design and implement frontend logic with a focus on performance (V8 JIT optimization), security (XSS prevention), and maintainability (Clean Code/SOLID). It specifically targets modern web standards and high-scale TypeScript architectures.
+This skill transforms the agent into a proactive system for building Vanilla JavaScript applications. It focuses on engine-level performance (JIT optimization), DOM efficiency, and strict lifecycle management of browser events.
 
 ## 3. Procedural Workflow
 
-### Phase A: Skeptical Inquiry (Mandatory)
-Before any code generation, the agent MUST ask:
-1. **Component Contract:** What are the expected inputs (Props) and outputs (Events)?
-2. **State Scope:** Is this local component state or global application state?
-3. **Data Source:** Are we handling asynchronous data? (Requires Loading/Error state planning).
-4. **Target Environment:** Browser-native or Framework-specific?
+### Phase A: Skeptical Inquiry (Critical)
+Before proposing any code, the agent MUST request:
+1. **Data Lifecycle:** Where does the data come from and how often does it update?
+2. **DOM Interaction:** How many elements will be rendered? (To decide on `DocumentFragment` usage).
+3. **Event Management:** Will components be added/removed dynamically? (To plan `AbortController` cleanup).
+4. **State Strategy:** How will the UI state be synchronized with the data?
 
 ### Phase B: Infrastructure Design (SPEC)
-Generate a Markdown report defining:
-- **Type Definitions:** Strict `interface` or `type` declarations.
-- **Performance Strategy:** Use of `DocumentFragment`, `Virtual DOM` considerations, or `Signal` patterns.
-- **Security Audit:** How user data will be sanitized.
+Generate a report including:
+- **Architecture Sketch:** Separation of Logic, UI Manipulation, and Data Fetching.
+- **Performance Strategy:** Specific V8 optimizations (e.g., avoiding polymorphic calls or hidden class changes).
+- **Security Protocol:** Clear definition of XSS prevention measures.
 
-### Phase C: Implementation
-- **Clean Code:** High cohesion within functions. No anonymous arrow functions in loops (memory leak prevention).
-- **Modern Syntax:** String Templates, Optional Chaining, and Nullish Coalescing.
-- **Asynchrony:** Robust `async/await` implementation with timeout handling.
+### Phase C: Implementation (Clean Code)
+- Use **ES Modules** for modularity.
+- Implement **Semantic Naming** as per industry best practices.
+- Apply **Delegation Pattern** for event listeners where multiple children are involved.
 
-### Phase D: Verification (The Validation Phase)
-- **Static Analysis:** Check for type invariants (e.g., `unknown` vs `any`).
-- **Test Suite:** Generate tests for logic "edge cases" (e.g., empty API responses, network failures).
-- **DOM Audit:** Verify that events are properly cleaned up via `AbortController`.
+### Phase D: Verification (Validation)
+- **Memory Audit:** Check for uncleaned listeners.
+- **Edge Case Check:** Handle `null` from `localStorage`, empty arrays, and network timeouts.
+- **UI State Validation:** Ensure proper Loading/Error/Empty states are implemented.
 
 ## 4. Skeptical Reasoning Patterns
-The agent MUST challenge the user:
-- **Zombie Forms:** If the user forgets `e.preventDefault()`, the agent must flag it.
-- **Direct Mutation:** If the user tries to mutate state directly, the agent must propose an immutable alternative.
-- **Hoisting Risks:** Warn against `var` or function declarations in favor of `const` and arrow functions where scope safety is required.
+- If the user suggests `innerHTML`, the agent MUST warn about XSS and suggest `textContent`.
+- If the user tries to mutate a global variable, the agent MUST propose a functional, immutable alternative.
+- If the logic is heavy, the agent MUST suggest using `Web Workers` or splitting tasks into `requestIdleCallback`.
 
 ## 5. Execution Trigger
-**Activation Keyword:** "Build TS system for [Feature/Component]"
+**Activation Keyword:** "Build JS system for [Feature/Problem]"
